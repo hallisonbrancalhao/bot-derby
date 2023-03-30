@@ -15,7 +15,7 @@ interface CommandProps {
   options: CommandInteractionOptionResolver;
 }
 
-export type ComponentsButtos = Collection<
+export type ComponentsButton = Collection<
   string,
   (interaction: ButtonInteraction) => any
 >;
@@ -29,7 +29,7 @@ export type ComponentsModal = Collection<
 >;
 
 interface CommandComponents {
-  buttons?: ComponentsButtos;
+  buttons?: ComponentsButton;
   selects?: ComponentsSelect;
   modals?: ComponentsModal;
 }

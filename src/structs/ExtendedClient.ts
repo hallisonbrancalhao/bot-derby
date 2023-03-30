@@ -8,27 +8,23 @@ import {
   ApplicationCommandDataResolvable,
   ClientEvents,
 } from "discord.js";
-
 import dotenv from "dotenv";
+import fs from "fs";
+import path from "path";
 import {
   CommandType,
-  ComponentsButtos,
+  ComponentsButton,
   ComponentsModal,
   ComponentsSelect,
 } from "./types/Command";
+import { EventType } from "./types/Event";
 dotenv.config();
 
-import fs from "fs";
-import path from "path";
-import { EventType } from "./types/Event";
-
-const fileCondition = (fileName: string) => {
-  fileName.endsWith(".js") || fileName.endsWith(".ts");
-};
-
+const fileCondition = (fileName: string) =>
+  fileName.endsWith(".ts") || fileName.endsWith(".js");
 export class ExtendedClient extends Client {
   public commands: Collection<string, CommandType> = new Collection();
-  public buttons: ComponentsButtos = new Collection();
+  public buttons: ComponentsButton = new Collection();
   public selects: ComponentsSelect = new Collection();
   public modals: ComponentsModal = new Collection();
   constructor() {
@@ -48,24 +44,24 @@ export class ExtendedClient extends Client {
       ],
     });
   }
-
   public start() {
     this.registerModules();
     this.registerEvents();
-    this.login(process.env.BOT_TOKEN as string);
+    this.login(process.env.BOT_TOKEN);
   }
-
   private registerCommands(commands: Array<ApplicationCommandDataResolvable>) {
     this.application?.commands
       .set(commands)
       .then(() => {
-        console.log("✅Slash commands (/) defined".green);
+        console.log("✅ Slash Commands (/) defined".green);
       })
-      .catch((err) => {
-        console.error(` ❌ an error occurred: ${err}`.red);
+      .catch((error) => {
+        console.log(
+          `❌ An error occurred while trying to set the Slash Commands (/): \n${error}`
+            .red
+        );
       });
   }
-
   private registerModules() {
     const slashCommands: Array<ApplicationCommandDataResolvable> = new Array();
 
@@ -78,7 +74,6 @@ export class ExtendedClient extends Client {
           const command: CommandType = (
             await import(`../commands/${local}/${fileName}`)
           )?.default;
-
           const { name, buttons, selects, modals } = command;
 
           if (name) {
@@ -96,7 +91,6 @@ export class ExtendedClient extends Client {
 
     this.on("ready", () => this.registerCommands(slashCommands));
   }
-
   private registerEvents() {
     const eventsPath = path.join(__dirname, "..", "events");
 
@@ -104,13 +98,14 @@ export class ExtendedClient extends Client {
       fs.readdirSync(`${eventsPath}/${local}`)
         .filter(fileCondition)
         .forEach(async (fileName) => {
-          const { name, once, run }: EventType<keyof ClientEvents> =
-            await import(`../events/${local}/${fileName}`);
+          const { name, once, run }: EventType<keyof ClientEvents> = (
+            await import(`../events/${local}/${fileName}`)
+          )?.default;
 
           try {
             if (name) once ? this.once(name, run) : this.on(name, run);
-          } catch (err) {
-            console.error(` ❌ an error occurred: ${err}`.red);
+          } catch (error) {
+            console.log(`An error occurred on event: ${name} \n${error}`.red);
           }
         });
     });
