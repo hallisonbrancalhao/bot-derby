@@ -15,7 +15,12 @@ client.on('ready', () => {
 
 client.on('messageCreate', message => {
     if(message.author.bot) return
-    message.reply(`${message.author.username}, oi`)
+    message.reply({
+        content: 'Olá!',
+        allowedMentions: {
+            repliedUser: true
+        }
+    })
 })
 
-client.login(process.env.DISCORDJS_BOT_TOKEN);
+client.login(process.env.BOT_TOKEN);
