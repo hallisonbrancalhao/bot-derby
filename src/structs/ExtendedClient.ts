@@ -18,6 +18,7 @@ import {
   ComponentsSelect,
 } from "./types/Command";
 import { EventType } from "./types/Event";
+
 dotenv.config();
 
 const fileCondition = (fileName: string) =>
