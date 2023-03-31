@@ -1,6 +1,6 @@
 import { CommandInteractionOptionResolver } from "discord.js";
 import { client } from "../..";
-import { Event } from "../../structs/types/Event";
+import { Event } from "../../common/types/Event";
 
 export default new Event({
   name: "interactionCreate",

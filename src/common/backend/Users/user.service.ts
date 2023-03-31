@@ -1,32 +1,32 @@
-import User from "./user.schema";
-import { ConnectionUserGLPI } from "../types/UserTypes";
+const UserSchema = require("./user.schema");
+import { ConnectionUserGLPI } from "../../types/UserTypes";
 
 class UserService {
   async create(data: ConnectionUserGLPI) {
-    await User.create(data);
+    await UserSchema.create(data);
     return;
   }
 
   async findAll() {
-    const findedUsers = await User.find();
+    const findedUsers = await UserSchema.find();
 
     return findedUsers;
   }
 
   async findUser(id: any) {
-    const user = await User.findById(id);
+    const user = await UserSchema.findById(id);
     return user;
   }
 
   async deleteUser(id: any) {
-    const user = await User.findOneAndDelete({
+    const user = await UserSchema.findOneAndDelete({
       _id: id,
     });
     return user;
   }
 
   async updateUser(id: any, data: ConnectionUserGLPI) {
-    const userToUpdate = await User.findOneAndUpdate(
+    const userToUpdate = await UserSchema.findOneAndUpdate(
       { _id: id },
       {
         usernameDiscord: data.usernameDiscord,
@@ -34,7 +34,7 @@ class UserService {
       }
     );
 
-    const updatedUser = User.findById(userToUpdate?._id);
+    const updatedUser = UserSchema.findById(userToUpdate?._id);
 
     return updatedUser;
   }

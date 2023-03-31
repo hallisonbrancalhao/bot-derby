@@ -1,8 +1,14 @@
-import { Schema, model } from "mongoose";
-import { ConnectionUserGLPI } from "../types/UserTypes";
+import { Collection, Schema, model } from "mongoose";
+import { ConnectionUserGLPI } from "../../types/UserTypes";
+import { ObjectId } from "bson";
 
 const UserSchema = new Schema(
   {
+    id: {
+      type: ObjectId,
+      required: true,
+      unique: true,
+    },
     usernameDiscord: {
       type: String,
       required: true,
@@ -24,4 +30,4 @@ const UserSchema = new Schema(
   }
 );
 
-export default model<ConnectionUserGLPI>("User", UserSchema);
+export default model<ConnectionUserGLPI>("users", UserSchema);

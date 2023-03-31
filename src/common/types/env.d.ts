@@ -5,5 +5,6 @@ declare namespace NodeJS {
     USER: string;
     PASSWORD: string;
     DATABASE: string;
+    MONGODB_CONNECT: string;
   }
 }

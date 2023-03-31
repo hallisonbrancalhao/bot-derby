@@ -2,17 +2,11 @@ import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
 } from "discord.js";
-import { connection } from "../../structs/database/connect";
-import { Command } from "../../structs/types/Command";
+import { Command } from "../../common/types/Command";
 
 async function getTickets() {
-  const tickets = await connection.query("SELECT * FROM ordem LIMIT 5", () => {
-    console.log("Foi");
-  });
-
-  return tickets.results;
+  return 0;
 }
-
 export default new Command({
   name: "tickets",
   description: "Buscar tickets",
