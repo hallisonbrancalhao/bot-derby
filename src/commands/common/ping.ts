@@ -13,6 +13,6 @@ export default new Command({
   description: "reply with pong",
   type: ApplicationCommandType.ChatInput,
   run({ interaction }) {
-    interaction.reply({ ephemeral: true, content: "pong" });
+    interaction.reply({ ephemeral: true, content: "👌pong" });
   },
 });
