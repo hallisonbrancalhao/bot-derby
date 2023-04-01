@@ -1,33 +1,18 @@
-import { Collection, Schema, model } from "mongoose";
-import { ConnectionUserGLPI } from "../../types/UserTypes";
+import { Schema, model } from "mongoose";
+import { IUser } from "../../types/UserTypes";
 import { ObjectId } from "bson";
 
-const UserSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
-    id: {
-      type: ObjectId,
-      required: true,
-      unique: true,
-    },
-    usernameDiscord: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    email: {
-      required: true,
-      type: String,
-      unique: true,
-    },
-    usernameGlpi: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+    discordId: { type: String, required: true },
+    email: { type: String, required: true },
+    usernameGLPI: { type: String, required: true },
   },
   {
     timestamps: true,
   }
 );
 
-export default model<ConnectionUserGLPI>("users", UserSchema);
+export const UserModel = model<IUser>("users", userSchema);
+
+// export default model<IUser>("users", UserSchema);

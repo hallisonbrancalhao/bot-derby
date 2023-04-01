@@ -6,5 +6,6 @@ declare namespace NodeJS {
     PASSWORD: string;
     DATABASE: string;
     MONGODB_CONNECT: string;
+    URL_API_BACKEND: string;
   }
 }

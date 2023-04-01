@@ -10,8 +10,8 @@ export interface UserType {
   lastName: String;
 }
 
-export interface ConnectionUserGLPI {
-  usernameDiscord: String;
-  email: String;
-  usernameGLPI: String;
+export interface IUser {
+  discordId: string;
+  email: string;
+  usernameGLPI: string;
 }
