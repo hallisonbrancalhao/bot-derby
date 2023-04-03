@@ -1,8 +1,10 @@
 import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
+  EmbedBuilder,
 } from "discord.js";
 import { Command } from "../../common/types/Command";
+import { getAllTickets, getUserGLPI } from "../../common/services/functions";
 
 async function getTickets() {
   return 0;
@@ -34,25 +36,43 @@ export default new Command({
 
   async run({ interaction, options }) {
     const subCommand = options.getSubcommand();
+    const { user } = interaction;
 
     switch (subCommand) {
       case "buscar":
         const ticketNumber = options.getInteger("numero");
         // TODO: Implementar busca do ticket by id
         break;
+
       case "todos":
-        // TODO: Implementar lista de todos os tickets
+        const { usernameGLPI } = await getUserGLPI(user.id);
+        const { tickets } = await getAllTickets(usernameGLPI);
+
+        let myTickets: any = [];
+        tickets.forEach((ticket: any) => {
+          myTickets +=
+            "🎫 " +
+            `[${ticket.id}]` +
+            `(https://chamados.crefaz.com.br/front/ticket.form.php?id=${ticket.id})` +
+            " - " +
+            ticket.name +
+            "\n";
+        });
+
+        const embed = new EmbedBuilder()
+          .setTitle("Todos os seus tickets")
+          .setDescription(myTickets)
+          .setColor("Aqua")
+          .setAuthor({
+            name: user.username,
+            iconURL: user.avatarURL() || undefined,
+          });
+
+        await interaction.deferReply({ ephemeral: false });
+        interaction.editReply({ embeds: [embed] });
         break;
+
       default:
     }
-
-    const text = options.getString("texto", true);
-
-    await interaction.deferReply({ ephemeral: true });
-    interaction.editReply({
-      content:
-        `Ticket: ${text}` +
-        (await getTickets().then((res) => JSON.stringify(res))),
-    });
   },
 });

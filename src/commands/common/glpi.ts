@@ -3,8 +3,8 @@ import {
   ApplicationCommandType,
 } from "discord.js";
 
+import { sendData } from "../../common/services/functions/apiMongoDB";
 import { Command } from "../../common/types/Command";
-import { postData, sendData } from "../../common/services/api";
 import { IUser } from "../../common/types/UserTypes";
 
 export default new Command({
@@ -25,7 +25,7 @@ export default new Command({
       required: true,
     },
   ],
-  run({ interaction, options }) {
+  async run({ interaction, options }) {
     const { user } = interaction;
     const usernameGLPI = options.getString("nome");
     const email = options.getString("email");
@@ -36,11 +36,12 @@ export default new Command({
       discordId: user.id!,
     };
 
-    sendData(body);
-
-    interaction.reply({
-      ephemeral: true,
-      content: `O usuário ${user} com id: ${user.id} solicitou: ${usernameGLPI}.`,
-    });
+    const res = await sendData(body);
+    if (res === 200) {
+      interaction.reply({
+        ephemeral: true,
+        content: `Seu usuário do GLPI agora extá conectado ao seu discord✅`,
+      });
+    }
   },
 });

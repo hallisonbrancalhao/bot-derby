@@ -4,7 +4,11 @@ import userService from "./user.service";
 class UserController {
   public async create(req: Request, res: Response) {
     await userService.create(req.body);
-    return res.status(201).send();
+    return res.send();
+  }
+  public async find(req: Request, res: Response) {
+    await userService.find(req, res);
+    return res.send();
   }
 }
 

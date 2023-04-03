@@ -11,7 +11,7 @@ export class Mysql {
       });
       console.log("🔗 Connect MYSQL database success ".green.bgBlack);
     } catch (error) {
-      console.error("❌ Connect MYSQL database fail".red, error);
+      console.error("❌ Connect MYSQL database fail".red);
     }
   }
 }

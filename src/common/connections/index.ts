@@ -7,7 +7,7 @@ const mysql = new Mysql();
 class Loaders {
   public connect() {
     mongodb.connect();
-    mysql.connect();
+    // mysql.connect();
   }
 }
 

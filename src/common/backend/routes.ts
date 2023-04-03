@@ -8,7 +8,7 @@ const routes = Router();
 
 // routes.get("/health-check", healthCheckController.check);
 // routes.get("/users", userController.findAll);
-// routes.get("/users/:id", userController.find);
+routes.get("/users/:discordId", userController.find);
 routes.post("/users", userController.create);
 // routes.delete("/users/:id", userController.delete);
 // routes.put("/users/:id", userController.update);

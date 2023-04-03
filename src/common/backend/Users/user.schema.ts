@@ -4,7 +4,7 @@ import { ObjectId } from "bson";
 
 const userSchema = new Schema<IUser>(
   {
-    discordId: { type: String, required: true },
+    discordId: { type: String, required: true, unique: true },
     email: { type: String, required: true },
     usernameGLPI: { type: String, required: true },
   },
@@ -14,5 +14,3 @@ const userSchema = new Schema<IUser>(
 );
 
 export const UserModel = model<IUser>("users", userSchema);
-
-// export default model<IUser>("users", UserSchema);
