@@ -4,7 +4,13 @@ import {
   EmbedBuilder,
 } from "discord.js";
 import { Command } from "../../common/types/Command";
-import { getAllTickets, getUserGLPI } from "../../common/services/functions";
+import {
+  getAllTickets,
+  getUserGLPI,
+  mountTickets,
+} from "../../common/services/functions";
+import { groupTickets } from "../../common/services/functions/groupTickets";
+import { Tickets } from "../../common/types/Ticket";
 
 async function getTickets() {
   return 0;
@@ -46,30 +52,17 @@ export default new Command({
 
       case "todos":
         const { usernameGLPI } = await getUserGLPI(user.id);
-        const { tickets } = await getAllTickets(usernameGLPI);
+        const tickets: Tickets = await getAllTickets(usernameGLPI);
 
-        let myTickets: any = [];
-        tickets.forEach((ticket: any) => {
-          myTickets +=
-            "🎫 " +
-            `[${ticket.id}]` +
-            `(https://chamados.crefaz.com.br/front/ticket.form.php?id=${ticket.id})` +
-            " - " +
-            ticket.name +
-            "\n";
+        const embeds: EmbedBuilder[] = await mountTickets(
+          tickets,
+          usernameGLPI,
+          user
+        );
+        await interaction.deferReply({ ephemeral: true });
+        interaction.editReply({
+          embeds: embeds,
         });
-
-        const embed = new EmbedBuilder()
-          .setTitle("Todos os seus tickets")
-          .setDescription(myTickets)
-          .setColor("Aqua")
-          .setAuthor({
-            name: user.username,
-            iconURL: user.avatarURL() || undefined,
-          });
-
-        await interaction.deferReply({ ephemeral: false });
-        interaction.editReply({ embeds: [embed] });
         break;
 
       default:

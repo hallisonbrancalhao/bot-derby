@@ -1,4 +1,3 @@
-import { IUser } from "../../types/UserTypes";
 import axios from "axios";
 
 export const api = axios.create({

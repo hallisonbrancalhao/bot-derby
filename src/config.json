@@ -1,7 +1,22 @@
 {
-    "colors": {
-        "red": "#a33636",
-        "green": "#58a336",
-        "blue": "#3641a3"
-    }
+    "colors": [
+        {
+            "Status 1": "#1F79FF"
+        },
+        {
+            "Status 2": "#FFA51F"
+        },
+        {
+            "Status 3": "#FFA51F"
+        },
+        {
+            "Status 4": "#FF3A1F"
+        },
+        {
+            "Status 5": "#1FFF50"
+        },
+        {
+            "Status 6": "#7DFF9A"
+        }
+    ]
 }

@@ -1,0 +1,46 @@
+export interface Ticket {
+  status_desc: string;
+  id: string;
+  entities_id: string;
+  name: string;
+  date: Date;
+  closedate: Date | null;
+  solvedate: Date | null;
+  date_mod: Date;
+  users_id_lastupdater: string;
+  status: string;
+  users_id_recipient: string;
+  requesttypes_id: string;
+  content: string;
+  urgency: string;
+  impact: string;
+  priority: string;
+  itilcategories_id: string;
+  type: string;
+  global_validation: "1";
+  slas_id_ttr: string;
+  slas_id_tto: string;
+  slalevels_id_ttr: string;
+  time_to_resolve: null;
+  time_to_own: null;
+  begin_waiting_date: null;
+  sla_waiting_duration: string;
+  ola_waiting_duration: string;
+  olas_id_tto: string;
+  olas_id_ttr: string;
+  olalevels_id_ttr: string;
+  ola_ttr_begin_date: Date | null;
+  internal_time_to_resolve: null;
+  internal_time_to_own: null;
+  waiting_duration: string;
+  close_delay_stat: string;
+  solve_delay_stat: string;
+  takeintoaccount_delay_stat: string;
+  actiontime: string;
+  is_deleted: string;
+  locations_id: string;
+  validation_percent: string;
+  date_creation: Date;
+}
+
+export type Tickets = Ticket[];
