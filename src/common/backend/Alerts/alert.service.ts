@@ -1,18 +1,16 @@
-import { Request, Response } from "express";
 const { WebhookClient } = require("discord.js");
 
 class AlertService {
-  async send(req: Request, res: Response) {
-    const { body } = req;
+  async send(body: any): Promise<Boolean> {
     try {
       const webhook = new WebhookClient({
         url: process.env.BOT_WEBHOOK as string,
       });
       webhook.send(body.content);
-      res.status(200).send("Message sent successfully.");
+      return true;
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error sending message.");
+      return false;
     }
   }
 }

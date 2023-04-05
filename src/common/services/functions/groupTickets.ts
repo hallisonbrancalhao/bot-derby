@@ -10,17 +10,3 @@ export function groupTickets(tickets: Tickets): { [key: string]: Ticket } {
     return grupos;
   }, {});
 }
-
-// export function agruparTickets(tickets: Tickets): { [key: string]: Tickets } {
-//   const grupos: { [key: string]: Tickets } = {};
-
-//   tickets.forEach((ticket) => {
-//     if (grupos[ticket.status]) {
-//       grupos[ticket.status].push(ticket);
-//     } else {
-//       grupos[ticket.status] = [ticket];
-//     }
-//   });
-
-//   return grupos;
-// }

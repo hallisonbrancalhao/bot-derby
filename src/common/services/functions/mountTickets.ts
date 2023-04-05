@@ -1,11 +1,12 @@
-import { ColorResolvable, EmbedBuilder, User } from "discord.js";
+import {
+  ColorResolvable,
+  CommandInteraction,
+  EmbedBuilder,
+  User,
+} from "discord.js";
 import { Ticket, Tickets } from "../../types/Ticket";
 
-export async function mountTickets(
-  tickets: Tickets,
-  usernameGLPI: string,
-  user: User
-) {
+export async function mountTickets(tickets: Tickets, usernameGLPI: string) {
   const embeds: EmbedBuilder[] = [];
 
   const colors: { [key: string]: string } = {
@@ -44,10 +45,6 @@ export async function mountTickets(
           .setColor(colors[status] as ColorResolvable)
           .setTitle(`${ticketList[0].status_desc}`)
           .setDescription(list)
-          .setAuthor({
-            name: usernameGLPI,
-            iconURL: user.avatarURL() || undefined,
-          })
       );
     }
   }

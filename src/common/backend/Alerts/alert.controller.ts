@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import alertService from "./alert.service";
 
-class UserController {
+class AlertController {
   public async send(req: Request, res: Response) {
-    await alertService.send(req, res);
-    return res.send();
+    const { body } = req;
+    const alert: Boolean = await alertService.send(body);
+    alert ? res.status(200) : res.status(500);
   }
 }
 
-export default new UserController();
+export default new AlertController();
