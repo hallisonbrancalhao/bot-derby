@@ -10,7 +10,7 @@ import { CronJobs } from "./job";
 const connections = require("./common/connections/");
 const client = new ExtendedClient();
 const server = new Server();
-const cron = new CronJobs();
+// const cron = new CronJobs();
 
 server.start();
 client.start();

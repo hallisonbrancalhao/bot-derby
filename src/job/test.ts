@@ -17,8 +17,9 @@ export const teste = cron.schedule("*/5 * * * *", async () => {
     api.post("/alert", {
       content: `
         @everyone
-        ❌❌❌ Conexão com o FTP falhou ❌❌❌:
+        ❌ Conexão com o FTP falhou ❌:
         HOST: ${process.env.TEST_FTP_HOST}`,
+      type: "danger",
     });
   }
 });

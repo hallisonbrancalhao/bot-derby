@@ -9,12 +9,12 @@ export async function mountTickets(
   const embeds: EmbedBuilder[] = [];
 
   const colors: { [key: string]: string } = {
-    "1": "#1F79FF",
-    "2": "#FFA51F",
-    "3": "#FFA51F",
-    "4": "#FF3A1F",
-    "5": "#1FFF50",
-    "6": "#7DFF9A",
+    "1": "#181ed9",
+    "2": "#ffb917",
+    "3": "#f5d17f",
+    "4": "#f00202",
+    "5": "#0bb502",
+    "6": "#757575",
   };
 
   const ticketLists: { [key: string]: Ticket[] } = {

@@ -59,7 +59,7 @@ export default new Command({
           usernameGLPI,
           user
         );
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral: false });
         interaction.editReply({
           embeds: embeds,
         });

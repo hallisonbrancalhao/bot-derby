@@ -4,11 +4,10 @@ const { WebhookClient } = require("discord.js");
 class AlertService {
   async send(req: Request, res: Response) {
     const { body } = req;
-    const webhook = new WebhookClient({
-      url: process.env.BOT_WEBHOOK as string,
-    });
-
     try {
+      const webhook = new WebhookClient({
+        url: process.env.BOT_WEBHOOK as string,
+      });
       webhook.send(body.content);
       res.status(200).send("Message sent successfully.");
     } catch (error) {
