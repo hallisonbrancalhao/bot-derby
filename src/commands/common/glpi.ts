@@ -37,10 +37,15 @@ export default new Command({
     };
 
     const res = await sendData(body);
-    if (res === 200) {
+    if (res) {
       interaction.reply({
         ephemeral: true,
         content: `Seu usuário do GLPI agora extá conectado ao seu discord✅`,
+      });
+    } else {
+      interaction.reply({
+        ephemeral: true,
+        content: `❌ Sua conta já possui um vínculo ao GLPI`,
       });
     }
   },
