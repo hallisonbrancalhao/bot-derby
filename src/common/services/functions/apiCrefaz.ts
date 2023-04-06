@@ -11,10 +11,10 @@ export async function getAllTickets(username: string) {
   }
 }
 
-export async function getTicket(number: number) {
+export async function getTicket(number: string) {
   try {
     const res = await apiGlpi.get(`?ticket_id=${number}`);
-    return res.data;
+    return res.data.tickets[0];
   } catch (err) {
     throw new Error("Nenhum ticket encontrado".red);
   }

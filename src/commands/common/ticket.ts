@@ -3,6 +3,7 @@ import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
   ComponentType,
+  DateResolvable,
   EmbedBuilder,
   StringSelectMenuBuilder,
 } from "discord.js";
@@ -34,7 +35,7 @@ export default new Command({
         {
           name: "numero",
           description: "Digite o número do ticket",
-          type: ApplicationCommandOptionType.Integer,
+          type: ApplicationCommandOptionType.String,
           required: true,
         },
       ],
@@ -51,30 +52,39 @@ export default new Command({
 
     switch (subCommand) {
       case "buscar":
-        const ticketNumber = options.getInteger("numero");
+        //TODO: Rota pra retornar o nome do Responsável via ID
+        const ticketNumber = options.getString("numero");
         if (!ticketNumber) {
           return interaction.reply({
             content: "É necessario inserir o numero do ticket",
           });
         }
-        const res = await getTicket(ticketNumber);
-        const ticket = res[0];
+        const ticket = await getTicket(ticketNumber);
         const ticketEmbed: EmbedBuilder = new EmbedBuilder()
           .setColor("Aqua")
-          .setTitle(`${ticket.status_desc}`)
-          .setDescription(`${ticket.name}`)
+          .setTitle(`🎫 ${ticket.name}`)
+          .setDescription(`Criado em: ${ticket.date_creation as Date}`)
           .setFields({
             name: "Prioridade",
-            value: `${ticket.tickets.name}`,
+            value: `Níve: ${ticket.priority}`,
+          })
+          .setFields({
+            name: "Urgência",
+            value: `Níve: ${ticket.urgency}`,
+          })
+          .setFields({
+            name: "Status",
+            value: `${ticket.status_desc}`,
           });
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral: false });
         interaction.editReply({
           embeds: [ticketEmbed],
         });
         break;
 
       case "listar":
-        const usernameGLPI = await getUserGLPI(user.id);
+        const { usernameGLPI } = await getUserGLPI(user.id);
+        console.log("run : usernameGLPI:", usernameGLPI);
         if (!usernameGLPI) {
           await interaction.deferReply({ ephemeral: true });
           return interaction.editReply({
@@ -83,6 +93,7 @@ export default new Command({
           });
         }
         const tickets: Tickets = await getAllTickets(usernameGLPI);
+        console.log("run : tickets:", tickets);
 
         const embeds: EmbedBuilder[] = await mountTickets(
           tickets,
