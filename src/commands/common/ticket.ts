@@ -76,7 +76,7 @@ export default new Command({
             name: "Status",
             value: `${ticket.status_desc}`,
           });
-        await interaction.deferReply({ ephemeral: false });
+        await interaction.deferReply({ ephemeral: true });
         interaction.editReply({
           embeds: [ticketEmbed],
         });
@@ -84,7 +84,6 @@ export default new Command({
 
       case "listar":
         const { usernameGLPI } = await getUserGLPI(user.id);
-        console.log("run : usernameGLPI:", usernameGLPI);
         if (!usernameGLPI) {
           await interaction.deferReply({ ephemeral: true });
           return interaction.editReply({
@@ -93,8 +92,6 @@ export default new Command({
           });
         }
         const tickets: Tickets = await getAllTickets(usernameGLPI);
-        console.log("run : tickets:", tickets);
-
         const embeds: EmbedBuilder[] = await mountTickets(
           tickets,
           usernameGLPI

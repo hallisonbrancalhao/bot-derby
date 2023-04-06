@@ -13,7 +13,7 @@ export default new Command({
       .setDescription("Aqui estão os principais comandos disponíveis:")
       .setFields(
         {
-          name: "🔗 Vincular Usuário",
+          name: "🔗 Vincular Usuário ",
           value: `Para iniciar, use o comando \`/glpi\` para sincronizar sua conta Discord com seu usuário AD/GLPI: \`/glpi seu.nome email@crefaz.com.br\``,
         },
         {
@@ -26,7 +26,7 @@ export default new Command({
         },
         {
           name: "🎫 Detalhar um ticket por número do chamado",
-          value: `Para detalhar um chamado, use o comando \`/tickets buscar\` e insira o núnero do chamado (⏳EM BREVE)`,
+          value: `Para detalhar um chamado, use o comando \`/tickets buscar\` e insira o núnero do chamado`,
         }
       );
     interaction.reply({
