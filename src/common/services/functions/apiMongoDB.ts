@@ -13,18 +13,9 @@ export async function sendData(body: IUser) {
 export async function getUserGLPI(discordId: string) {
   const user = await api.get(`/users/${discordId}`);
   return user.data;
-  try {
-  } catch (err) {
-    console.error(err);
-    throw new Error("Erro ao encontrar usuário vinculado: ");
-  }
 }
 
 export async function getAllUsers() {
-  try {
-    const users = api.get("/users");
-    return users;
-  } catch (error) {
-    throw new Error("Erro ao encontrar usuários".red);
-  }
+  const users = api.get("/users");
+  return users;
 }

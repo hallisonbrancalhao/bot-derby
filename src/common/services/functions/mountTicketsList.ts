@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { Ticket, Tickets } from "../../types/Ticket";
 
-export async function mountTickets(tickets: Tickets, usernameGLPI: string) {
+export async function mountTicketsList(tickets: Tickets, usernameGLPI: string) {
   const embeds: EmbedBuilder[] = [];
 
   const colors: { [key: string]: string } = {

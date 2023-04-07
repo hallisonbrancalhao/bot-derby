@@ -3,7 +3,6 @@ import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
   ComponentType,
-  DateResolvable,
   EmbedBuilder,
   StringSelectMenuBuilder,
 } from "discord.js";
@@ -11,11 +10,12 @@ import { Command } from "../../common/types/Command";
 import {
   getAllTickets,
   getAllUsers,
-  getTicket,
   getUserGLPI,
-  mountTickets,
+  mountTicketsList,
+  switchBuscar,
 } from "../../common/services/functions";
 import { Tickets } from "../../common/types/Ticket";
+import { switchListar } from "../../common/services/functions/switchListar";
 
 export default new Command({
   name: "tickets",
@@ -54,52 +54,11 @@ export default new Command({
       case "buscar":
         //TODO: Rota pra retornar o nome do Responsável via ID
         const ticketNumber = options.getString("numero");
-        if (!ticketNumber) {
-          return interaction.reply({
-            content: "É necessario inserir o numero do ticket",
-          });
-        }
-        const ticket = await getTicket(ticketNumber);
-        const ticketEmbed: EmbedBuilder = new EmbedBuilder()
-          .setColor("Aqua")
-          .setTitle(`🎫 ${ticket.name}`)
-          .setDescription(`Criado em: ${ticket.date_creation as Date}`)
-          .setFields({
-            name: "Prioridade",
-            value: `Níve: ${ticket.priority}`,
-          })
-          .setFields({
-            name: "Urgência",
-            value: `Níve: ${ticket.urgency}`,
-          })
-          .setFields({
-            name: "Status",
-            value: `${ticket.status_desc}`,
-          });
-        await interaction.deferReply({ ephemeral: true });
-        interaction.editReply({
-          embeds: [ticketEmbed],
-        });
+        await switchBuscar(ticketNumber!, interaction);
         break;
 
       case "listar":
-        const { usernameGLPI } = await getUserGLPI(user.id);
-        if (!usernameGLPI) {
-          await interaction.deferReply({ ephemeral: true });
-          return interaction.editReply({
-            content:
-              "Você ainda não possui o usuário vinculado, use o comando `/help` para mais informações",
-          });
-        }
-        const tickets: Tickets = await getAllTickets(usernameGLPI);
-        const embeds: EmbedBuilder[] = await mountTickets(
-          tickets,
-          usernameGLPI
-        );
-        await interaction.deferReply({ ephemeral: true });
-        interaction.editReply({
-          embeds: embeds,
-        });
+        await switchListar(interaction, user);
         break;
 
       case "tecnico":
@@ -134,7 +93,7 @@ export default new Command({
         colector.on("collect", async (selectInteraction) => {
           const value = selectInteraction.values[0];
           const ticketsTecnico: Tickets = await getAllTickets(value);
-          const tecnicoEmbeds: EmbedBuilder[] = await mountTickets(
+          const tecnicoEmbeds: EmbedBuilder[] = await mountTicketsList(
             ticketsTecnico,
             value
           );
@@ -145,6 +104,12 @@ export default new Command({
           });
         });
         break;
+
+      default:
+        interaction.deferReply({ ephemeral: true });
+        return interaction.editReply({
+          content: "Comando inválido",
+        });
     }
   },
 });
