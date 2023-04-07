@@ -1,10 +1,8 @@
-import { teste } from "./test";
-import { elektro } from "./elektro";
+import { tickets } from "./tickets";
 
 export class CronJobs {
   public run() {
     console.log("✅ Tarefas de monitoramento iniciadas!".green);
-    teste.start();
-    elektro.start();
+    tickets.start();
   }
 }

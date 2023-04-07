@@ -18,7 +18,7 @@ class UserController {
   public async findAll(req: Request, res: Response) {
     const users: IUser[] | null = await userService.findAll();
     if (users) return res.status(201).json(users);
-    return res.status(404).json({ message: "Usuário não encontrado" });
+    return res.status(404);
   }
 }
 

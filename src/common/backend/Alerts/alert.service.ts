@@ -1,16 +1,14 @@
 const { WebhookClient } = require("discord.js");
 
 class AlertService {
-  async send(body: any): Promise<Boolean> {
+  async send(data: any) {
     try {
       const webhook = new WebhookClient({
         url: process.env.BOT_WEBHOOK as string,
       });
-      webhook.send(body.content);
-      return true;
+      webhook.send(data);
     } catch (error) {
-      console.error(error);
-      return false;
+      throw new Error("Erro");
     }
   }
 }
