@@ -1,11 +1,22 @@
-import { CommandInteraction, EmbedBuilder } from "discord.js";
+import {
+  CommandInteraction,
+  CommandInteractionOptionResolver,
+  EmbedBuilder,
+} from "discord.js";
 import { getTicket } from "./apiCrefaz";
 import { mountEmbed } from "./mountEmbed";
 
 export async function switchBuscar(
-  ticketNumber: string,
-  interaction: CommandInteraction
+  interaction: CommandInteraction,
+  options: CommandInteractionOptionResolver
 ) {
+  const ticketNumber = options.getString("numero");
+  if (!ticketNumber) {
+    return interaction.reply({
+      content: "Você precisa inserir o número do ticket para ser buscado.",
+      ephemeral: true,
+    });
+  }
   const ticket = await getTicket(ticketNumber);
   const ticketEmbed: EmbedBuilder | null = await mountEmbed(ticket);
 
