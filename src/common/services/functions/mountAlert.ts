@@ -13,7 +13,7 @@ export function mountAlertTicket(ticket: Ticket): EmbedBuilder {
 
   let cor: ColorResolvable;
 
-  const possibilidades = [
+  const possibility = [
     "Novo chamado",
     "Nova tarefa",
     "Atualização de uma tarefa",
@@ -23,22 +23,22 @@ export function mountAlertTicket(ticket: Ticket): EmbedBuilder {
     "Chamado solucionado",
   ];
 
-  let correspondencia: string | undefined;
+  let match: string | undefined;
 
-  for (let i = 0; i < possibilidades.length; i++) {
-    if (ticket.assunto.includes(possibilidades[i])) {
-      correspondencia = possibilidades[i];
+  for (let i = 0; i < possibility.length; i++) {
+    if (ticket.assunto.includes(possibility[i])) {
+      match = possibility[i];
       break;
     }
   }
 
-  if (correspondencia) {
-    cor = getCorPorAssunto(correspondencia);
+  if (match) {
+    cor = getCorPorAssunto(match);
   } else {
     cor = "Grey";
   }
 
-  embed.setColor(cor).setTitle(`${ticket.tecnico}  - ${correspondencia}`);
+  embed.setColor(cor).setTitle(`${ticket.tecnico}  - ${match}`);
 
   return embed;
 }

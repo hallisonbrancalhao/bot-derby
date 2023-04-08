@@ -1,6 +1,6 @@
 declare namespace NodeJS {
   interface ProcessEnv {
-    API_PORT: number;
+    PORT: number;
     API_HOST: string;
     BOT_TOKEN: string;
     BOT_WEBHOOK: string;
