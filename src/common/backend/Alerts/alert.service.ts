@@ -6,7 +6,7 @@ class AlertService {
       const webhook = new WebhookClient({
         url: process.env.BOT_WEBHOOK as string,
       });
-      webhook.send(data);
+      return webhook.send(data);
     } catch (error) {
       throw new Error("Erro");
     }

@@ -52,7 +52,13 @@ export default new Command({
         break;
 
       case "tecnico":
-        await switchTecnico(interaction);
+        try {
+          await switchTecnico(interaction);
+        } catch (error) {
+          return interaction.reply({
+            content: "Erro ao encontrar tickets deste tecnico",
+          });
+        }
         break;
 
       default:

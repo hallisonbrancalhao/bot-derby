@@ -1,9 +1,6 @@
 import { Router } from "express";
-import userController from "./Users/user.controller";
-import alertController from "./Alerts/alert.controller";
-// import healthCheckController from "./controller/healthCheckController";
-// import productController from "./controller/productController";
-// import userController from "./controller/userController";
+import userController from "./users/user.controller";
+import alertController from "./alerts/alert.controller";
 
 const routes = Router();
 
