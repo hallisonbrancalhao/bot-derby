@@ -1,21 +1,12 @@
 import {
-  ActionRowBuilder,
   ApplicationCommandOptionType,
   ApplicationCommandType,
-  ComponentType,
-  DateResolvable,
-  EmbedBuilder,
-  StringSelectMenuBuilder,
+  Collection,
 } from "discord.js";
 import { Command } from "../../common/types/Command";
-import {
-  getAllTickets,
-  getAllUsers,
-  getTicket,
-  getUserGLPI,
-  mountTickets,
-} from "../../common/services/functions";
-import { Tickets } from "../../common/types/Ticket";
+import { switchBuscar } from "../../common/services/functions";
+import { switchListar } from "../../common/services/functions/switchListar";
+import { switchTecnico } from "../../common/services/functions/switchTecnico";
 
 export default new Command({
   name: "tickets",
@@ -53,98 +44,28 @@ export default new Command({
     switch (subCommand) {
       case "buscar":
         //TODO: Rota pra retornar o nome do Responsável via ID
-        const ticketNumber = options.getString("numero");
-        if (!ticketNumber) {
-          return interaction.reply({
-            content: "É necessario inserir o numero do ticket",
-          });
-        }
-        const ticket = await getTicket(ticketNumber);
-        const ticketEmbed: EmbedBuilder = new EmbedBuilder()
-          .setColor("Aqua")
-          .setTitle(`🎫 ${ticket.name}`)
-          .setDescription(`Criado em: ${ticket.date_creation as Date}`)
-          .setFields({
-            name: "Prioridade",
-            value: `Níve: ${ticket.priority}`,
-          })
-          .setFields({
-            name: "Urgência",
-            value: `Níve: ${ticket.urgency}`,
-          })
-          .setFields({
-            name: "Status",
-            value: `${ticket.status_desc}`,
-          });
-        await interaction.deferReply({ ephemeral: true });
-        interaction.editReply({
-          embeds: [ticketEmbed],
-        });
+        await switchBuscar(interaction, options);
         break;
 
       case "listar":
-        const { usernameGLPI } = await getUserGLPI(user.id);
-        if (!usernameGLPI) {
-          await interaction.deferReply({ ephemeral: true });
-          return interaction.editReply({
-            content:
-              "Você ainda não possui o usuário vinculado, use o comando `/help` para mais informações",
-          });
-        }
-        const tickets: Tickets = await getAllTickets(usernameGLPI);
-        const embeds: EmbedBuilder[] = await mountTickets(
-          tickets,
-          usernameGLPI
-        );
-        await interaction.deferReply({ ephemeral: true });
-        interaction.editReply({
-          embeds: embeds,
-        });
+        await switchListar(interaction, user);
         break;
 
       case "tecnico":
-        const { data } = await getAllUsers();
-        let tecnicos: any = [];
-        data.forEach((tecnico: any) => {
-          tecnicos.push({
-            label: tecnico.usernameGLPI,
-            value: tecnico.usernameGLPI,
+        try {
+          await switchTecnico(interaction);
+        } catch (error) {
+          return interaction.reply({
+            content: "Erro ao encontrar tickets deste tecnico",
           });
-        });
-
-        const row = new ActionRowBuilder<StringSelectMenuBuilder>({
-          components: [
-            new StringSelectMenuBuilder({
-              custom_id: "select-tecnic",
-              placeholder: "Selecione um técnico",
-              options: tecnicos,
-            }),
-          ],
-        });
-
-        const select = await interaction.reply({
-          components: [row],
-          fetchReply: true,
-        });
-
-        const colector = select.createMessageComponentCollector({
-          componentType: ComponentType.StringSelect,
-        });
-
-        colector.on("collect", async (selectInteraction) => {
-          const value = selectInteraction.values[0];
-          const ticketsTecnico: Tickets = await getAllTickets(value);
-          const tecnicoEmbeds: EmbedBuilder[] = await mountTickets(
-            ticketsTecnico,
-            value
-          );
-          await selectInteraction.deferReply({ ephemeral: true });
-          selectInteraction.editReply({
-            embeds: tecnicoEmbeds,
-            components: [],
-          });
-        });
+        }
         break;
+
+      default:
+        interaction.deferReply({ ephemeral: true });
+        return interaction.editReply({
+          content: "Comando inválido",
+        });
     }
   },
 });

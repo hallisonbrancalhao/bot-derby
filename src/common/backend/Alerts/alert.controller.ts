@@ -4,8 +4,10 @@ import alertService from "./alert.service";
 class AlertController {
   public async send(req: Request, res: Response) {
     const { body } = req;
-    const alert: Boolean = await alertService.send(body);
-    alert ? res.status(200) : res.status(500);
+    await alertService
+      .send(body)
+      .then(() => res.status(200).json({ message: "Mensagem enviada" }))
+      .catch(() => res.status(500));
   }
 }
 
