@@ -8,19 +8,17 @@ export const tickets = cron.schedule("*/1 * * * *", async () => {
   try {
     const { data } = await apiGlpi.get("alerta");
 
-    if (data.length > 0) {
-      const embeds: EmbedBuilder[] = data.map((ticket: any) => {
-        const embed: EmbedBuilder | null = mountAlertTicket(ticket);
-        if (embed) {
-          return mountAlertTicket(ticket);
-        }
-      });
-      const postData = {
-        embeds: embeds,
-      };
-      await api
-        .post("/alert", postData)
-        .then((res) => console.log(res.data.message));
+    const embeds: EmbedBuilder[] = [];
+
+    for (const ticket of data) {
+      const embed = await mountAlertTicket(ticket);
+      if (embed !== null) {
+        embeds.push(embed);
+      }
+    }
+
+    if (embeds.length > 0) {
+      await api.post("alert", { embeds });
     }
   } catch (error) {
     console.log(error);

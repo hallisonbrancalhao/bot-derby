@@ -12,6 +12,12 @@ class UserService {
       discordId: discordId,
     });
   }
+
+  async findByUsername(usernameGLPI: string): Promise<IUser | null> {
+    return await UserModel.findOne({
+      usernameGLPI: usernameGLPI,
+    });
+  }
   async findAll(): Promise<IUser[] | null> {
     return await UserModel.find();
   }
