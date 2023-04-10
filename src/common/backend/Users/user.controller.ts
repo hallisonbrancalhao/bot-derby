@@ -20,6 +20,14 @@ class UserController {
       return res.send(err);
     }
   }
+  public async findByUsername(req: Request, res: Response) {
+    try {
+      const user = await userService.findByUsername(req.params.usernameGLPI);
+      return res.send(user);
+    } catch (err) {
+      return res.send(err);
+    }
+  }
 
   public async findAll(req: Request, res: Response) {
     try {

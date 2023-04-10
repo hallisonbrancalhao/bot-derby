@@ -3,7 +3,7 @@ import api from "../config/apiMongoDB";
 
 export async function sendData(body: IUser) {
   try {
-    const response = await api.post("/users", body);
+    const response = await api.post("users", body);
     console.log("Criado!".green);
 
     return response;
@@ -14,11 +14,11 @@ export async function sendData(body: IUser) {
 }
 
 export async function getUserGLPI(discordId: string) {
-  const user = await api.get(`/users/${discordId}`);
+  const user = await api.get(`users/${discordId}`);
   return user.data;
 }
 
 export async function getAllUsers() {
-  const users = api.get("/users");
+  const users = api.get("users");
   return users;
 }

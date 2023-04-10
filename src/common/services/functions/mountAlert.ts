@@ -1,4 +1,6 @@
-import { ColorResolvable, EmbedBuilder } from "discord.js";
+import { ColorResolvable, EmbedAuthorOptions, EmbedBuilder } from "discord.js";
+import api from "../config/apiMongoDB";
+import { client } from "../../..";
 
 interface Ticket {
   ticket_id: string;
@@ -6,9 +8,10 @@ interface Ticket {
   tecnico: string;
 }
 
-export function mountAlertTicket(ticket: Ticket): EmbedBuilder | null {
+export async function mountAlertTicket(
+  ticket: Ticket
+): Promise<EmbedBuilder | null> {
   if (ticket.assunto.includes("Atualização")) return null;
-
   const embed = new EmbedBuilder().setDescription(`🎫 [${
     ticket.ticket_id
   }](https://chamados.crefaz.com.br/front/ticket.form.php?id=${
@@ -31,9 +34,30 @@ export function mountAlertTicket(ticket: Ticket): EmbedBuilder | null {
       return ticket.assunto.match(p);
     }) ?? [];
 
-  embed
-    .setColor(color as ColorResolvable)
-    .setTitle(`${ticket.tecnico}  - ${subject}`);
+  const userLinked = await api.get(`user/${ticket.tecnico}`);
+
+  if (userLinked.data) {
+    const user = await client.users.fetch(userLinked.data.discordId);
+    embed.setTitle(`${subject}`);
+    embed.addFields({ name: "Responsável", value: `${user}` });
+    embed.setAuthor({
+      name: user.username,
+      iconURL: user.avatarURL() || undefined,
+    });
+  } else {
+    embed.setTitle(`${ticket.tecnico} - ${subject}`);
+    embed.addFields({ name: "Responsável", value: `${ticket.tecnico}` });
+    embed.setAuthor({
+      name: ticket.tecnico,
+      iconURL: undefined,
+    });
+  }
+  embed.setFooter({
+    text: `Notificação GLPI`,
+    iconURL: `https://chamados.crefaz.com.br/plugins/trademark/front/picture.send.php?path=60/63a2522f39f60.png`,
+  });
+  embed.setTimestamp();
+  embed.setColor(color as ColorResolvable);
 
   return embed;
 }
