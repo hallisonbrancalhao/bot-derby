@@ -4,9 +4,12 @@ import api from "../config/apiMongoDB";
 export async function sendData(body: IUser) {
   try {
     const response = await api.post("/users", body);
-    return response.status;
+    console.log("Criado!".green);
+
+    return response;
   } catch (err) {
     console.error("Erro ao criar usuário".red);
+    return null;
   }
 }
 

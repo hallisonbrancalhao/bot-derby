@@ -15,7 +15,9 @@ export const tickets = cron.schedule("*/3 * * * *", async () => {
       const postData = {
         embeds: embeds,
       };
-      await api.post("/alert", postData);
+      await api
+        .post("/alert", postData)
+        .then((res) => console.log(res.data.message));
     }
   } catch (error) {
     console.log(error);

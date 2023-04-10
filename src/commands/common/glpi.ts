@@ -29,6 +29,7 @@ export default new Command({
     const { user } = interaction;
     const usernameGLPI = options.getString("nome");
     const email = options.getString("email");
+    console.log(`🤖 ${user.username} usou: /glpi `);
 
     const body: IUser = {
       usernameGLPI: usernameGLPI!,
@@ -37,13 +38,13 @@ export default new Command({
     };
 
     const res = await sendData(body);
-    if (res) {
-      interaction.reply({
+    if (res?.status === 201) {
+      return interaction.reply({
         ephemeral: true,
         content: `Seu usuário do GLPI agora extá conectado ao seu discord✅`,
       });
     } else {
-      interaction.reply({
+      return interaction.reply({
         ephemeral: true,
         content: `❌ Sua conta já possui um vínculo ao GLPI`,
       });

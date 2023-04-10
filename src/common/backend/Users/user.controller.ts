@@ -1,23 +1,33 @@
 import { Request, Response } from "express";
-import userService from "./user.service";
 import { IUser } from "../../types/UserTypes";
+import userService from "../Users/user.service";
 
 class UserController {
   public async create(req: Request, res: Response) {
-    const user = await userService.create(req.body);
-    if (!user) return res.status(400).send(null);
-    return res.send();
+    try {
+      return await userService
+        .create(req.body)
+        .then((response) => res.status(201).send(response));
+    } catch (error) {
+      return res.status(400).send({ message: "Usuário duplicado" });
+    }
   }
   public async find(req: Request, res: Response) {
-    const { discordId } = req.params;
-    const user = await userService.find(discordId);
-    return res.send(user);
+    try {
+      const user = await userService.find(req.params.discordId);
+      return res.send(user);
+    } catch (err) {
+      return res.send(err);
+    }
   }
 
   public async findAll(req: Request, res: Response) {
-    const users: IUser[] | null = await userService.findAll();
-    if (users) return res.status(201).json(users);
-    return res.status(404);
+    try {
+      const users: IUser[] | null = await userService.findAll();
+      if (users) return res.status(201).send(users);
+    } catch (error) {
+      return res.status(404);
+    }
   }
 }
 

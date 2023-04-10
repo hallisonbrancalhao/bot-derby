@@ -3,10 +3,10 @@ const { WebhookClient } = require("discord.js");
 class AlertService {
   async send(data: any) {
     try {
-      const webhook = new WebhookClient({
-        url: process.env.BOT_WEBHOOK as string,
+      const webhookTiAlert = new WebhookClient({
+        url: process.env.WEBHOOK_ALERT as string,
       });
-      return webhook.send(data);
+      return webhookTiAlert.send(data);
     } catch (error) {
       throw new Error("Erro");
     }

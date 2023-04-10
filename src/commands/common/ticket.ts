@@ -41,6 +41,8 @@ export default new Command({
     const subCommand = options.getSubcommand();
     const { user } = interaction;
 
+    console.log(`🤖 ${user.username} usou: /${subCommand} `);
+
     switch (subCommand) {
       case "buscar":
         //TODO: Rota pra retornar o nome do Responsável via ID

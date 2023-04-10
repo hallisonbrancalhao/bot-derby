@@ -17,4 +17,4 @@ client.start();
 connections.connect();
 cron.run();
 
-export { client, config, cron, server, connections };
+export { client, config, server, connections };
