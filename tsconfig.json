@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM.Iterable"],
     "rootDir": "./src",
     "outDir": "./dist",
     "target": "ESNext",

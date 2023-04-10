@@ -10,11 +10,11 @@ import { CronJobs } from "./job";
 const connections = require("./common/connections/");
 const client = new ExtendedClient();
 const server = new Server();
-const cron = new CronJobs();
+// const cron = new CronJobs();
 
 server.start();
 client.start();
 connections.connect();
-cron.run();
+// cron.run();
 
-export { client, config, cron, server, connections };
+export { client, config, server, connections };

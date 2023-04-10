@@ -4,9 +4,12 @@ import { IUser } from "../../types/UserTypes";
 
 class UserController {
   public async create(req: Request, res: Response) {
-    const user = await userService.create(req.body);
-    if (!user) return res.status(400).send(null);
-    return res.send();
+    try {
+      const user = await userService.create(req.body);
+      return res.status(201);
+    } catch (error) {
+      return res.status(400);
+    }
   }
   public async find(req: Request, res: Response) {
     const { discordId } = req.params;

@@ -3,15 +3,8 @@ import { IUser } from "../../types/UserTypes";
 
 class UserService {
   async create(data: IUser) {
-    try {
-      const user = new UserModel(data);
-      const res = await user.save();
-      console.log("✅ Usuário criado!".green);
-      return res;
-    } catch (err) {
-      console.error("❌" + err);
-      return null;
-    }
+    const user = new UserModel(data);
+    return await user.save();
   }
 
   async find(discordId: string): Promise<IUser | null> {

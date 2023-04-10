@@ -37,7 +37,7 @@ export default new Command({
     };
 
     const res = await sendData(body);
-    if (res) {
+    if (res === 201) {
       interaction.reply({
         ephemeral: true,
         content: `Seu usuário do GLPI agora extá conectado ao seu discord✅`,
