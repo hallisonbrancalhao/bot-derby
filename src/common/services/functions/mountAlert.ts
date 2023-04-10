@@ -11,18 +11,12 @@ interface Ticket {
 export async function mountAlertTicket(
   ticket: Ticket
 ): Promise<EmbedBuilder | null> {
-  if (ticket.assunto.includes("Atualização")) return null;
-  const embed = new EmbedBuilder().setDescription(`🎫 [${
-    ticket.ticket_id
-  }](https://chamados.crefaz.com.br/front/ticket.form.php?id=${
-    ticket.ticket_id
-  })\n
-    ${ticket.assunto.replace(/\[GLPI #\d+\]/g, "")}`);
+  const embed = new EmbedBuilder();
 
   const possibility = {
     "Novo chamado": "Blue",
     "Nova tarefa": "Blue",
-    "Novo acompanhamento": "Yellow",
+    "Novo acompanhamento": "Gold",
     "Atualização de uma tarefa": "White",
     "Atualização de um chamado": "White",
     "Encerramento do chamado": "Green",
@@ -42,20 +36,32 @@ export async function mountAlertTicket(
     embed.addFields({ name: "Responsável", value: `${user}` });
     embed.setAuthor({
       name: user.username,
-      iconURL: user.avatarURL() || undefined,
+      iconURL: user.avatarURL() || `https://crefaz.vercel.app/favicon.ico`,
     });
   } else {
-    embed.setTitle(`${ticket.tecnico} - ${subject}`);
+    embed.setTitle(`${subject}`);
     embed.addFields({ name: "Responsável", value: `${ticket.tecnico}` });
     embed.setAuthor({
       name: ticket.tecnico,
-      iconURL: undefined,
+      iconURL: `https://crefaz.vercel.app/favicon.ico`,
     });
   }
   embed.setFooter({
     text: `Notificação GLPI`,
     iconURL: `https://chamados.crefaz.com.br/plugins/trademark/front/picture.send.php?path=60/63a2522f39f60.png`,
   });
+
+  const descricao = ticket.assunto.replace(/\[GLPI #\d+\]/g, "");
+
+  if (ticket.assunto.includes("Atualização")) {
+    return null;
+  }
+
+  const linkTicket = `https://chamados.crefaz.com.br/front/ticket.form.php?id=${ticket.ticket_id}`;
+  const formatedDescription = descricao.replace(subject, "");
+  const mensageEmbed = `🎫 [${ticket.ticket_id}](${linkTicket})\n${formatedDescription}`;
+
+  embed.setDescription(mensageEmbed);
   embed.setTimestamp();
   embed.setColor(color as ColorResolvable);
 
