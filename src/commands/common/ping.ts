@@ -13,6 +13,7 @@ export default new Command({
   description: "reply with pong",
   type: ApplicationCommandType.ChatInput,
   run({ interaction }) {
+    console.log(`🤖 ${interaction.user.username} usou: /ping `);
     interaction.reply({ ephemeral: true, content: "👌pong" });
   },
 });

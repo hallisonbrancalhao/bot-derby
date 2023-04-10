@@ -15,14 +15,15 @@ export function mountAlertTicket(ticket: Ticket): EmbedBuilder {
     ${ticket.assunto.replace(/\[GLPI #\d+\]/g, "")}`);
   const possibility = {
     "Novo chamado": "Blue",
-    "Nova tarefa": "Aqua",
+    "Nova tarefa": "Blue",
+    "Novo acompanhamento": "Yellow",
     "Atualização de uma tarefa": "White",
     "Atualização de um chamado": "White",
     "Encerramento do chamado": "Green",
-    "Novo acompanhamento": "Blue",
-    "Chamado solucionado": "Blue",
+    "Chamado solucionado": "Green",
+    "Exclusão de uma tarefa": "Navy",
   };
-  const [subject = "Novo alerta", color = "Gray"] =
+  const [subject = "Nova Notificação", color = "Grey"] =
     Object.entries(possibility).find(([p]) => {
       return ticket.assunto.match(p);
     }) ?? [];

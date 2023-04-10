@@ -4,6 +4,7 @@ declare namespace NodeJS {
     API_HOST: string;
     BOT_TOKEN: string;
     BOT_WEBHOOK: string;
+    WEBHOOK_ALERT: string;
     HOST: string;
     PORT: string;
     USER: string;

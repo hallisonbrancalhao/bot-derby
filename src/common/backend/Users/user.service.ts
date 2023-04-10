@@ -1,4 +1,4 @@
-import { UserModel } from "./user.schema";
+import { UserModel } from "../Users/user.schema";
 import { IUser } from "../../types/UserTypes";
 
 class UserService {
@@ -8,24 +8,12 @@ class UserService {
   }
 
   async find(discordId: string): Promise<IUser | null> {
-    try {
-      const user: IUser | null = await UserModel.findOne({
-        discordId: discordId,
-      });
-      return user;
-    } catch (err) {
-      console.error("❌" + err);
-      return null;
-    }
+    return await UserModel.findOne({
+      discordId: discordId,
+    });
   }
   async findAll(): Promise<IUser[] | null> {
-    try {
-      const user: IUser[] | null = await UserModel.find();
-      return user;
-    } catch (err) {
-      console.error("❌" + err);
-      return null;
-    }
+    return await UserModel.find();
   }
 }
 

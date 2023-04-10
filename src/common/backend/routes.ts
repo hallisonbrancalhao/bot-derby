@@ -1,6 +1,6 @@
 import { Router } from "express";
-import userController from "./users/user.controller";
-import alertController from "./alerts/alert.controller";
+import userController from "./Users/user.controller";
+import alertController from "./Alerts/alert.controller";
 
 const routes = Router();
 
