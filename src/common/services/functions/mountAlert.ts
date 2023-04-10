@@ -6,13 +6,16 @@ interface Ticket {
   tecnico: string;
 }
 
-export function mountAlertTicket(ticket: Ticket): EmbedBuilder {
+export function mountAlertTicket(ticket: Ticket): EmbedBuilder | null {
+  if (ticket.assunto.includes("Atualização")) return null;
+
   const embed = new EmbedBuilder().setDescription(`🎫 [${
     ticket.ticket_id
   }](https://chamados.crefaz.com.br/front/ticket.form.php?id=${
     ticket.ticket_id
   })\n
     ${ticket.assunto.replace(/\[GLPI #\d+\]/g, "")}`);
+
   const possibility = {
     "Novo chamado": "Blue",
     "Nova tarefa": "Blue",
