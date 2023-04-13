@@ -1,4 +1,9 @@
-import { ColorResolvable, EmbedAuthorOptions, EmbedBuilder } from "discord.js";
+import {
+  ColorResolvable,
+  EmbedAuthorOptions,
+  EmbedBuilder,
+  User,
+} from "discord.js";
 import api from "../config/apiMongoDB";
 import { client } from "../../..";
 
@@ -8,9 +13,12 @@ interface Ticket {
   tecnico: string;
 }
 
-export async function mountAlertTicket(
-  ticket: Ticket
-): Promise<EmbedBuilder | null> {
+interface IData {
+  tecnico: string | User;
+  embed: EmbedBuilder;
+}
+
+export async function mountAlertTicket(ticket: Ticket): Promise<IData | null> {
   const embed = new EmbedBuilder();
 
   const possibility = {
@@ -30,8 +38,9 @@ export async function mountAlertTicket(
 
   const userLinked = await api.get(`user/${ticket.tecnico}`);
 
+  let user: User | null = null;
   if (userLinked.data) {
-    const user = await client.users.fetch(userLinked.data.discordId);
+    user = await client.users.fetch(userLinked.data.discordId);
     embed.setTitle(`${subject}`);
     embed.addFields({ name: "Responsável", value: `${user}` });
     embed.setAuthor({
@@ -40,7 +49,6 @@ export async function mountAlertTicket(
     });
   } else {
     embed.setTitle(`${subject}`);
-    embed.addFields({ name: "Responsável", value: `${ticket.tecnico}` });
     embed.setAuthor({
       name: ticket.tecnico,
       iconURL: `https://crefaz.vercel.app/favicon.ico`,
@@ -53,7 +61,7 @@ export async function mountAlertTicket(
 
   const descricao = ticket.assunto.replace(/\[GLPI #\d+\]/g, "");
 
-  if (ticket.assunto.includes("Atualização")) {
+  if (!ticket.assunto.includes("Novo acompanhamento")) {
     return null;
   }
 
@@ -65,5 +73,7 @@ export async function mountAlertTicket(
   embed.setTimestamp();
   embed.setColor(color as ColorResolvable);
 
-  return embed;
+  const tecnico = user ? user : ticket.tecnico;
+  const data: IData = { tecnico, embed };
+  return data;
 }

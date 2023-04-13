@@ -9,5 +9,6 @@ routes.get("/users/:discordId", userController.find);
 routes.get("/users", userController.findAll);
 routes.post("/users", userController.create);
 routes.post("/alert", alertController.send);
+routes.post("/alert-ftp", alertController.sendFtp);
 
 export default routes;
