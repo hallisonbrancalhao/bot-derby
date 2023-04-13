@@ -3,6 +3,8 @@ declare namespace NodeJS {
     PORT: number;
     API_HOST: string;
     BOT_TOKEN: string;
+    GPT_API_TOKEN: string;
+    GPT_ORG: string;
     BOT_WEBHOOK: string;
     WEBHOOK_ALERT: string;
     HOST: string;
