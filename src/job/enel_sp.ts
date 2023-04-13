@@ -17,7 +17,7 @@ export const cpfl = cron.schedule("*/5 * * * *", async () => {
       .setTitle("🚨 FTP CPFL está fora do ar")
       .setDescription(`Host: ${process.env.HOST_CPFL}`)
       .setColor("Red");
-    api.post("/alert-ftp", {
+    await api.post("/alert-ftp", {
       embeds: { embed },
     });
   }

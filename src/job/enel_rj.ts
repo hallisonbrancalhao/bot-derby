@@ -17,7 +17,7 @@ export const enel_rj = cron.schedule("*/5 * * * *", async () => {
       .setTitle("🚨 FTP ENEL - RJ está fora do ar")
       .setDescription(`Host: ${process.env.HOST_ENEL_RJ}`)
       .setColor("Red");
-    api.post("/alert-ftp", {
+    await api.post("/alert-ftp", {
       embeds: { embed },
     });
   }

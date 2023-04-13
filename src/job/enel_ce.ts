@@ -1,9 +1,9 @@
 import cron from "node-cron";
 import * as ftp from "basic-ftp";
 import api from "../common/services/config/apiMongoDB";
-import { EmbedBuilder } from "discord.js";
+import { mountAlertFtp } from "./mountAlerts/mountAlertFtp";
 
-export const enel_ce = cron.schedule("*/5 * * * *", async () => {
+export const enel_ce = cron.schedule("*/5 * * * * *", async () => {
   try {
     const client = new ftp.Client();
     await client.access({
@@ -13,12 +13,7 @@ export const enel_ce = cron.schedule("*/5 * * * *", async () => {
     });
     client.close();
   } catch (error) {
-    const embed: EmbedBuilder = new EmbedBuilder()
-      .setTitle("🚨 FTP ENEL - CE está fora do ar")
-      .setDescription(`Host: ${process.env.HOST_ENEL_CE}`)
-      .setColor("Red");
-    api.post("/alert-ftp", {
-      embeds: { embed },
-    });
+    const embed = await mountAlertFtp("ENEL CE");
+    await api.post("alert-ftp", { embeds: [embed] });
   }
 });
