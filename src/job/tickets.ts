@@ -4,7 +4,7 @@ import api from "../common/services/config/apiMongoDB";
 import { EmbedBuilder } from "discord.js";
 import { mountAlertTicket } from "../common/services/functions/mountAlert";
 
-export const tickets = cron.schedule("*/5 * * * *", async () => {
+export const tickets = cron.schedule("*/1 * * * *", async () => {
   try {
     const { data } = await apiGlpi.get("alerta");
     const embeds: EmbedBuilder[] = [];
