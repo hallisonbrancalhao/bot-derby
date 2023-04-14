@@ -2,7 +2,7 @@ import { TextChannel } from "discord.js";
 
 import { client } from "../..";
 
-const TARGET_CHANNEL = "chatbot";
+const TARGET_CHANNEL = "💬chatbot";
 
 export class Gpt {
   public async start() {
@@ -32,7 +32,7 @@ const generateOpenAIResponse = async (prompt: string): Promise<string> => {
       .createCompletion({
         model: "text-davinci-003",
         prompt: prompt,
-        temperature: 1.3,
+        temperature: 1.2,
         max_tokens: 800,
       })
       .catch((error: any) => {
