@@ -7,6 +7,7 @@ declare namespace NodeJS {
     GPT_ORG: string;
     BOT_WEBHOOK: string;
     WEBHOOK_ALERT: string;
+    WEBHOOK_ALERT_MONITORAMENTO: string;
     HOST: string;
     PORT: string;
     USER: string;
