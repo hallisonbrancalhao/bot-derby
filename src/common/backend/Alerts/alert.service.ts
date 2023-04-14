@@ -15,7 +15,18 @@ class AlertService {
   async sendFtp(data: any) {
     try {
       const webhookTiAlert = new WebhookClient({
-        url: process.env.WEBHOOK_ALERT as string,
+        url: process.env.WEBHOOK_ALERT_MONITORAMENTO as string,
+      });
+      return webhookTiAlert.send(data);
+    } catch (error) {
+      throw new Error("Erro");
+    }
+  }
+
+  async sendMonitoring(data: any) {
+    try {
+      const webhookTiAlert = new WebhookClient({
+        url: process.env.WEBHOOK_ALERT_MONITORAMENTO as string,
       });
       return webhookTiAlert.send(data);
     } catch (error) {

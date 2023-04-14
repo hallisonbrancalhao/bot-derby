@@ -1,6 +1,7 @@
 import cron from "node-cron";
 import * as ftp from "basic-ftp";
 import api from "../common/services/config/apiMongoDB";
+import { makePlainError } from "discord.js";
 
 export const teste = cron.schedule("*/5 * * * *", async () => {
   try {
@@ -19,7 +20,6 @@ export const teste = cron.schedule("*/5 * * * *", async () => {
         @everyone
         ❌ Conexão com o FTP falhou ❌:
         HOST: ${process.env.TEST_FTP_HOST}`,
-      type: "danger",
     });
   }
 });
