@@ -34,10 +34,10 @@ const generateOpenAIResponse = async (prompt: string): Promise<string> => {
 
     const response = await openai
       .createCompletion({
-        model: "gpt-3.5-turbo-0301",
+        model: "text-davinci-003",
         prompt: prompt,
-        messages: [{ role: "user", content: "Say this is a test!" }],
-        temperature: 0.7,
+        temperature: 1.2,
+        max_tokens: 800,
       })
       .catch((error: any) => {
         console.log(`OPENAI ERR: ${error}`);
