@@ -14,7 +14,11 @@ export class Gpt {
 
       const query = message.content.trim();
       const response = await generateOpenAIResponse(query);
-      message.reply(response);
+      try {
+        message.reply(response);
+      } catch (error) {
+        message.reply("Resposta muito longa para o Discord");
+      }
     });
   }
 }
@@ -30,10 +34,10 @@ const generateOpenAIResponse = async (prompt: string): Promise<string> => {
 
     const response = await openai
       .createCompletion({
-        model: "text-davinci-003",
+        model: "gpt-3.5-turbo-0301",
         prompt: prompt,
-        temperature: 1.2,
-        max_tokens: 800,
+        messages: [{ role: "user", content: "Say this is a test!" }],
+        temperature: 0.7,
       })
       .catch((error: any) => {
         console.log(`OPENAI ERR: ${error}`);

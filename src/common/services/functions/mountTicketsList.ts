@@ -1,22 +1,9 @@
-import {
-  ColorResolvable,
-  CommandInteraction,
-  EmbedBuilder,
-  User,
-} from "discord.js";
+import { ColorResolvable, EmbedBuilder } from "discord.js";
 import { Ticket, Tickets } from "../../types/Ticket";
+import { colors } from "../../utils/colors";
 
 export async function mountTicketsList(tickets: Tickets, usernameGLPI: string) {
   const embeds: EmbedBuilder[] = [];
-
-  const colors: { [key: string]: string } = {
-    "1": "#181ed9",
-    "2": "#ffb917",
-    "3": "#f5d17f",
-    "4": "#f00202",
-    "5": "#0bb502",
-    "6": "#757575",
-  };
 
   const ticketLists: { [key: string]: Ticket[] } = {
     "1": [],
