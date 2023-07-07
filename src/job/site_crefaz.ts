@@ -4,7 +4,7 @@ import axios from "axios";
 
 const websiteUrl = "https://site.crefaz.com.br";
 
-export const siteCrefaz = cron.schedule("*/5 * * * * *", async () => {
+export const siteCrefaz = cron.schedule("*/5 * * * *", async () => {
   try {
     const response = await axios.get(websiteUrl);
     if (response.status !== 200) {
