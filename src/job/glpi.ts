@@ -2,7 +2,7 @@ import cron from "node-cron";
 import api from "../common/services/config/apiMongoDB";
 import axios from "axios";
 
-const websiteUrl = "https://chamados.crefaz.com.brr";
+const websiteUrl = "https://chamados.crefaz.com.br";
 
 export const glpi = cron.schedule("*/1 * * * *", async () => {
   try {
