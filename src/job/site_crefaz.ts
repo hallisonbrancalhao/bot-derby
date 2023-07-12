@@ -16,7 +16,9 @@ export const siteCrefaz = cron.schedule("*/5 * * * *", async () => {
     }
   } catch (error) {
     api.post("/alert-monitoring", {
-      content: `🚨 @everyone - **Site Crefaz** fora do ar 🚨 - ${new Date().toLocaleString()} - ${error}`,
+      content: `@here 🚨 **Site Crefaz fora do ar**  - 🕗 ${new Date().toLocaleTimeString(
+        "pt-BR"
+      )} ${error}`,
     });
   }
 });
