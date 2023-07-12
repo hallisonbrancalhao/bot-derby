@@ -4,7 +4,7 @@ import axios from "axios";
 
 const websiteUrl = "https://chamados.crefaz.com.br";
 
-export const glpi = cron.schedule("*/1 * * * *", async () => {
+export const glpi = cron.schedule("*/5 * * * *", async () => {
   try {
     const response = await axios.get(websiteUrl);
     if (response.status !== 200) {
