@@ -10,9 +10,9 @@ export const arquivosCosern = cron.schedule("0 13-17 * * *", async () => {
   try {
     const client = new Client();
     await client.access({
-      host: process.env.HOST_COELBA as string,
-      user: process.env.USER_COELBA as string,
-      password: process.env.PASSWORD_COELBA as string,
+      host: process.env.HOST_COSERN as string,
+      user: process.env.USER_COSERN as string,
+      password: process.env.PASSWORD_COSERN as string,
     });
 
     const folderPath = "/home/terceiros/retorno";
