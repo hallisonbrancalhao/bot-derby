@@ -23,6 +23,17 @@ class AlertService {
     }
   }
 
+  async files(data: any) {
+    try {
+      const webhookTiAlert = new WebhookClient({
+        url: process.env.WEBHOOK_ALERT_FTP as string,
+      });
+      return webhookTiAlert.send(data);
+    } catch (error) {
+      throw new Error("Erro");
+    }
+  }
+
   async sendMonitoring(data: any) {
     try {
       const webhookTiAlert = new WebhookClient({

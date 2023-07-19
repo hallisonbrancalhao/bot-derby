@@ -25,6 +25,14 @@ class AlertController {
       .then(() => res.status(200).send({ message: "Mensagem enviada" }))
       .catch(() => res.status(500).send({ message: "Mensagem não enviada" }));
   }
+
+  public async files(req: Request, res: Response) {
+    const { body } = req;
+    await alertService
+      .files(body)
+      .then(() => res.status(200).send({ message: "Mensagem enviada" }))
+      .catch(() => res.status(500).send({ message: "Mensagem não enviada" }));
+  }
 }
 
 export default new AlertController();

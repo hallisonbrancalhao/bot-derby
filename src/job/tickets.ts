@@ -25,6 +25,7 @@ export const tickets = cron.schedule("*/1 * * * *", async () => {
       });
     }
   } catch (error) {
+    // TODO: Tratar erro de envio
     console.log(error);
   }
 });
