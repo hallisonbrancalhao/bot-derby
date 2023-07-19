@@ -6,7 +6,7 @@ import { EmbedBuilder } from "discord.js";
 process.env.TZ = "America/Sao_Paulo";
 
 let lastFileList: string[] = [];
-export const arquivosCoelba = cron.schedule("0 13-17 * * *", async () => {
+export const arquivosCosern = cron.schedule("0 13-17 * * *", async () => {
   try {
     const client = new Client();
     await client.access({
@@ -26,7 +26,7 @@ export const arquivosCoelba = cron.schedule("0 13-17 * * *", async () => {
     );
     if (newFiles.length > 0) {
       const embed = new EmbedBuilder();
-      embed.setTitle("[COELBA] 📄 Novos retornos disponibilizados.");
+      embed.setTitle("[COSERN] 📄 Novos retornos disponibilizados.");
       embed.addFields({ name: "Arquivos:", value: `${newFiles.join("\n")}` });
 
       embed.setColor("Green");
@@ -42,7 +42,7 @@ export const arquivosCoelba = cron.schedule("0 13-17 * * *", async () => {
   } catch (error) {
     const embed = new EmbedBuilder();
     embed.setTitle("⚠️ FTP Inacessível");
-    embed.setDescription(`Não foi possível acessar o **FTP COELBA**`);
+    embed.setDescription(`Não foi possível acessar o **FTP COSERN**`);
     embed.setColor("Red");
 
     api.post("/alert/files-ftp", {
