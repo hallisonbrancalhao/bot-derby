@@ -6,13 +6,13 @@ import { EmbedBuilder } from "discord.js";
 process.env.TZ = "America/Sao_Paulo";
 
 let lastFileList: string[] = [];
-export const arquivosElektro = cron.schedule("0 13-17 * * *", async () => {
+export const arquivosCelpe = cron.schedule("0 13-17 * * *", async () => {
   try {
     const client = new Client();
     await client.access({
-      host: process.env.HOST_ELEKTRO as string,
-      user: process.env.USER_ELEKTRO as string,
-      password: process.env.PASSWORD_ELEKTRO as string,
+      host: process.env.HOST_CELPE as string,
+      user: process.env.USER_CELPE as string,
+      password: process.env.PASSWORD_CELPE as string,
     });
 
     const folderPath = "/home/terceiros/retorno";
@@ -26,7 +26,7 @@ export const arquivosElektro = cron.schedule("0 13-17 * * *", async () => {
     );
     if (newFiles.length > 0) {
       const embed = new EmbedBuilder();
-      embed.setTitle("[ELEKTRO] 📄 Novos retornos disponibilizados.");
+      embed.setTitle("[CELPE] 📄 Novos retornos disponibilizados.");
       embed.addFields({ name: "Arquivos:", value: `${newFiles.join("\n")}` });
 
       embed.setColor("Green");
@@ -42,7 +42,7 @@ export const arquivosElektro = cron.schedule("0 13-17 * * *", async () => {
   } catch (error) {
     const embed = new EmbedBuilder();
     embed.setTitle("⚠️ FTP Inacessível");
-    embed.setDescription(`Não foi possível acessar o **FTP ELEKTRO**`);
+    embed.setDescription(`Não foi possível acessar o **FTP CELPE**`);
     embed.setColor("Red");
 
     api.post("/alert/files-ftp", {

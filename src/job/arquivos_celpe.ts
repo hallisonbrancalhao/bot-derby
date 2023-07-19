@@ -3,18 +3,19 @@ import { Client } from "basic-ftp";
 import api from "../common/services/config/apiMongoDB";
 import { EmbedBuilder } from "discord.js";
 
-let lastFileList: string[] = [];
+process.env.TZ = "America/Sao_Paulo";
 
-export const arquivosEnelSp = cron.schedule("*/5 * * * * *", async () => {
+let lastFileList: string[] = [];
+export const arquivosCelpe = cron.schedule("0 13-17 * * *", async () => {
   try {
     const client = new Client();
     await client.access({
-      host: process.env.TEST_FTP_IP as string,
-      user: process.env.TEST_FTP_USER as string,
-      password: process.env.TEST_FTP_PASSWORD as string,
+      host: process.env.HOST_CELPE as string,
+      user: process.env.USER_CELPE as string,
+      password: process.env.PASSWORD_CELPE as string,
     });
 
-    const folderPath = "/domains/brancalhao.com.br/arquivos";
+    const folderPath = "/home/terceiros/retorno";
 
     const currentFileList = (await client.list(folderPath)).map(
       (fileInfo) => fileInfo.name
@@ -25,11 +26,9 @@ export const arquivosEnelSp = cron.schedule("*/5 * * * * *", async () => {
     );
     if (newFiles.length > 0) {
       const embed = new EmbedBuilder();
-      embed.setTitle("📄 Arquivos na ENEL SP");
-      embed.setDescription(
-        `**Novos arquivos disponíveis**: 
-        ${newFiles.join("\n")}`
-      );
+      embed.setTitle("[CELPE] 📄 Novos retornos disponibilizados.");
+      embed.addFields({ name: "Arquivos:", value: `${newFiles.join("\n")}` });
+
       embed.setColor("Green");
 
       api.post("/alert/files-ftp", {
@@ -43,7 +42,7 @@ export const arquivosEnelSp = cron.schedule("*/5 * * * * *", async () => {
   } catch (error) {
     const embed = new EmbedBuilder();
     embed.setTitle("⚠️ FTP Inacessível");
-    embed.setDescription(`**Não foi possível acessar o FTP ENEL-SP **`);
+    embed.setDescription(`Não foi possível acessar o **FTP CELPE**`);
     embed.setColor("Red");
 
     api.post("/alert/files-ftp", {
