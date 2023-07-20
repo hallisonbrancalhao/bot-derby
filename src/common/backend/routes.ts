@@ -12,4 +12,6 @@ routes.post("/alert", alertController.send);
 routes.post("/alert-monitoring", alertController.sendMonitoring);
 routes.post("/alert-ftp", alertController.sendFtp);
 
+routes.post("/alert/files-ftp", alertController.files);
+
 export default routes;
