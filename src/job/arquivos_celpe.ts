@@ -6,6 +6,7 @@ import { EmbedBuilder } from "discord.js";
 process.env.TZ = "America/Sao_Paulo";
 
 let lastFileList: string[] = [];
+// export const arquivosCelpe = cron.schedule("0 * * * *", async () => {
 export const arquivosCelpe = cron.schedule("0 * * * *", async () => {
   const client = new Client();
   try {
