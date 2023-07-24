@@ -7,10 +7,10 @@ import { siteCrefaz } from "./site_crefaz";
 import { tickets } from "./tickets";
 export class CronJobs {
   public run() {
-    arquivosElektro.start();
-    arquivosCosern.start();
-    arquivosCelpe.start();
-    arquivosCoelba.start();
+    // arquivosElektro.start();
+    // arquivosCosern.start();
+    // arquivosCelpe.start();
+    // arquivosCoelba.start();
     tickets.start();
     glpi.start();
     siteCrefaz.start();
