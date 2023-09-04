@@ -16,9 +16,7 @@ export const glpi = cron.schedule("*/5 * * * *", async () => {
     }
   } catch (error) {
     api.post("/alert-monitoring", {
-      content: `@here 🚨 **GLPI fora do ar**  - 🕗 ${new Date().toLocaleTimeString(
-        "pt-BR"
-      )} ${error}`,
+      content: `@here 🚨 **[GLPI]** Fora do ar`,
     });
   }
 });

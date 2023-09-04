@@ -26,9 +26,7 @@ export const tickets = cron.schedule("*/1 * * * *", async () => {
     }
   } catch (error) {
     api.post("/alert-monitoring", {
-      content: `⚠️ **API** de integração GLPI-Discord (https://admin.crefaz.com/glpi/api) com instabilidade - 🕗 ${new Date().toLocaleTimeString(
-        "pt-BR"
-      )}`,
+      content: `⚠️ **API** de integração GLPI-Discord (https://admin.crefaz.com/glpi/api) com instabilidade`,
     });
   }
 });
