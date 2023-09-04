@@ -3,6 +3,7 @@ import { arquivosCoelba } from "./arquivos_coelba";
 import { arquivosCosern } from "./arquivos_cosern";
 import { arquivosElektro } from "./arquivos_elektro";
 import { glpi } from "./glpi";
+import { sftpJob } from "./sftp-web09";
 import { siteCrefaz } from "./site_crefaz";
 import { tickets } from "./tickets";
 export class CronJobs {
@@ -14,6 +15,7 @@ export class CronJobs {
     tickets.start();
     glpi.start();
     siteCrefaz.start();
+    sftpJob.start();
     console.log("✅ Tarefas de monitoramento iniciadas!".green);
   }
 }
