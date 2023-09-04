@@ -1,5 +1,10 @@
 declare namespace NodeJS {
   interface ProcessEnv {
+    SFTP_HOST: string;
+    SFTP_USER: string;
+    SFTP_PASSWORD: string;
+    SFTP_PORT: number;
+
     PORT: number;
     API_HOST: string;
     BOT_TOKEN: string;
