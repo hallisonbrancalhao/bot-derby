@@ -70,5 +70,7 @@ declare namespace NodeJS {
     HOST_ELEKTRO: string;
     USER_ELEKTRO: string;
     PASSWORD_ELEKTRO: string;
+
+    TEAMS_WEBHOOK: string;
   }
 }
