@@ -13,15 +13,8 @@ export const sftpJob = cron.schedule("*/5 * * * *", async () => {
       port: Number(process.env.SFTP_PORT),
     });
   } catch (error) {
-    console.log("SFTP fora do ar");
-
-    const embed = new EmbedBuilder();
-    embed.setTitle("⚠️ SFTP fora do ar");
-    embed.setDescription(`Não foi possível acessar o **SFTP**`);
-    embed.setColor("Red");
-
-    api.post("/alert/files-ftp", {
-      embeds: [embed],
+    api.post("/alert-monitoring", {
+      content: `@here ⚠️ **[SFTP WEB-09]** Fora do ar`,
     });
   } finally {
     await client.end();
