@@ -12,7 +12,7 @@ export class CronJobs {
     // arquivosCosern.start();
     // arquivosCelpe.start();
     // arquivosCoelba.start();
-    tickets.start();
+    // tickets.start();
     glpi.start();
     siteCrefaz.start();
     sftpJob.start();
